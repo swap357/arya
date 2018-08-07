@@ -1,0 +1,11 @@
+/*******************************
+         Site Overrides
+*******************************/
+.ui.icon.input {
+  min-width: 100%;
+}
+
+.ui .results {
+    top:auto !important;
+    bottom:30px !important;
+}

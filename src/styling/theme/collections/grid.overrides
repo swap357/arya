@@ -1,0 +1,8 @@
+/*******************************
+         Site Overrides
+*******************************/
+.ui.grid.arya-search {
+    position: absolute;
+    bottom: 1em;
+    min-width: 100%;
+}

@@ -1,0 +1,27 @@
+/*******************************
+         Site Overrides
+*******************************/
+.ui.segment {
+    margin-top:3.7em;
+}
+
+.ui.segment {
+    margin-top:2em;
+    min-height: 60vh;
+
+}
+
+.ui.segment.conversation {
+
+    min-height: 75vh;
+
+}
+
+.ui.segment.app-container {
+    min-height: 75vh;
+
+}
+
+// background: #8e9eab;  /* fallback for old browsers */
+// background: -webkit-linear-gradient(to bottom, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+// background: linear-gradient(to bottom, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
