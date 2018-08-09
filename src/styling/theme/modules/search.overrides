@@ -9,3 +9,13 @@
     top:auto !important;
     bottom:30px !important;
 }
+
+.ui.search .prompt{
+  border-radius: 0px;
+  
+}
+.ui.grid.arya-search {
+    position: relative;
+
+    min-width: 100%;
+}

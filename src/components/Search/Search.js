@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import faker from 'faker'
 import React, { Component } from 'react'
-import { Search, Grid, Header, Segment, Input } from 'semantic-ui-react'
+import { Search, Grid, Header, Segment, Input, Form } from 'semantic-ui-react'
 
 const source = _.times(5, () => ({
   title: faker.company.companyName(),
@@ -16,7 +16,13 @@ export default class SearchExample extends Component {
   constructor(props) {
     super(props);
     // create a ref to store the textInput DOM element
+    this.Searchhandler = this.Searchhandler.bind(this)
+    this.module = "search"
     }
+
+  Searchhandler(marg){
+
+  }
 
   handleRef = component => (this.ref = component);
   componentWillMount() {
@@ -28,6 +34,14 @@ export default class SearchExample extends Component {
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
   handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+
+  handleSubmit = () => {
+      var time = new Date().toLocaleTimeString();
+      var avatar="matt"
+      var user = "user"
+      this.props.convhandler({from:this.module,text:this.state.value,time:time,avatar:avatar,author:user})
+      this.state.value = ""
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -52,19 +66,22 @@ export default class SearchExample extends Component {
     return (
       <Grid className="arya-search">
         <Grid.Column>
-          <Search
-            autoFocus
-
-            size="small"
-            loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-            results={results}
-            value={value}
-            placeholder='say hi'
-            showNoResults={false}
-            {...this.props}
-          />
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Field>
+            <Search
+              autoFocus
+              size="small"
+              loading={isLoading}
+              onResultSelect={this.handleResultSelect}
+              onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
+              results={results}
+              value={value}
+              placeholder='say hi'
+              showNoResults={false}
+              {...this.props}
+            />
+        </Form.Field>
+      </Form>
         </Grid.Column>
       </Grid>
     )

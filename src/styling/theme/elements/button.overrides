@@ -1,3 +1,13 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.positive.active.button {
+  background-color:#33AD36;
+}
+.ui.positive.button:active {
+  background-color:grey;
+}
+
+.ui.negative.button:active {
+  background-color:grey;
+}
