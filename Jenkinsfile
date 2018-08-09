@@ -6,7 +6,8 @@ node {
     stage('Environment') {
       sh 'git --version'
       echo "Branch: ${env.BRANCH_NAME}"
-      sh 'docker -v'
+      sh 'usermod +a '
+      sh 'sudo docker -v'
       sh 'printenv'
     }
     stage('Deploy'){
