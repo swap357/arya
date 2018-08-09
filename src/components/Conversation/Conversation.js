@@ -32,7 +32,9 @@ export default class Conversation extends Component {
     this.Convhandler = this.Convhandler.bind(this)
     this.AddMessage = this.AddMessage.bind(this)
     this.scrollToBottom = this.scrollToBottom.bind(this)
+
     this.state = {
+      latest_message: "",
       messages: {
 
       }
@@ -48,22 +50,26 @@ export default class Conversation extends Component {
     this.scrollToBottom();
   }
 
+
   AddMessage(message) {
     //create a unike key for each new fruit item
      var timestamp = (new Date()).getTime();
 
      if(message.text==clear_command){
-      this.setState({ messages : {} });
+      this.setState({ latest_message: "", messages : {} });
      }
      else if(message.text==root_command){
 
-       this.setState({ messages : {root_message} });
+       this.setState({ latest_message: root_message, messages : {root_message} });
      }
      else{
        // update the state object
        this.state.messages['message-' + timestamp ] = message;
+       this.state.latest_message = message;
        // set the state
-       this.setState({ messages : this.state.messages });
+       this.setState({
+         latest_message: this.state.latest_message,
+         messages: this.state.messages });
      }
 
   }
@@ -72,6 +78,7 @@ export default class Conversation extends Component {
       // this.props.apphandler(marg);
       if(data.from==search_app){
           this.AddMessage(data)
+          this.props.apphandler(this.state.latest_message);
       }
 
   }

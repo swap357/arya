@@ -3,7 +3,7 @@ import { Button, Grid, Header, List, Segment, Menu, Comment, Form, Divider, Item
 
 import { CustomMessage, Navbar, Search, Conversation, AryaApp } from 'components'
 import 'styling/semantic.less'
-
+var $ = require ('jquery')
 const leftItems = [
 
 ]
@@ -18,15 +18,13 @@ const rightItems = [
   },
 
 ]
-const appTitle = "ShortAnswers";
-const nextLine = React.createElement('br');
 
 const dataItems = [
   {
     type: 'p',
     props: {
     },
-    content: "Sacramento temp"
+    content: "Ada"
   },
   {
     type: Header,
@@ -36,19 +34,56 @@ const dataItems = [
     content: '94° F'
   }
 ]
+const appTitle = "ShortAnswers";
+const nextLine = React.createElement('br');
+
+
 
 class App extends React.Component{
   constructor(props){
     super(props)
 
     this.Apphandler = this.Apphandler.bind(this)
+    this.ShortAnswers = this.ShortAnswers.bind(this)
+    this.state = {
+      userQuery: "",
+      answer: "",
+    }
   }
 
-  Apphandler(marg){
-      this.setState({})
+  ShortAnswers(query) {
+    var params = { appid: "G3YUE2-2KH8U3U3E6", i: query};
+    $.getJSON('http://api.wolframalpha.com/v1/result?callback=?',params)
+      .then(({ results }) => this.setState({ answer: results }));
+  }
+
+  Apphandler(userLatestMessage){
+      this.setState({
+        userQuery: userLatestMessage
+      })
+      this.ShortAnswers(userLatestMessage);
+      console.log(userLatestMessage);
   }
 
   render() {
+    const { userQuery } = this.state
+
+    const dataItems = [
+      {
+        type: 'p',
+        props: {
+        },
+        content: this.state.userQuery.text
+      },
+      {
+        type: Header,
+        props: {
+          as: 'h1'
+        },
+        content: this.state.answer
+      }
+    ]
+
     return(
       <>
       <Navbar leftItems={leftItems} rightItems={rightItems} borderless={true} >
