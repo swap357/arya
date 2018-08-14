@@ -11,6 +11,18 @@ export default class AryaApp extends Component {
 
     }
 
+    _createNodes(data){
+      return _.map(data, item => {
+        console.log(item.props);
+        if(item.props.subItems.length){
+        var node = this._createNodes(item.props.subItems)
+        return React.createElement(item.type,item.props,node)
+        }
+        else
+        return React.createElement(item.type,item.props,item.content)
+      } )
+    }
+
   static propTypes = {
     data: PropTypes.arrayOf(PropTypes.object),
   }
@@ -23,9 +35,7 @@ export default class AryaApp extends Component {
           <Header as='h1'>
             {this.props.title}<Divider/>
           </Header>
-          {_.map(data, item => React.createElement(item.type, item.props,
-                item.content
-            ) )}
+          {this._createNodes(data)}
         </Segment>
     )
   }

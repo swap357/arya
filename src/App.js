@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Header, List, Segment, Menu, Comment, Form, Divider, Item } from 'semantic-ui-react'
+import { Button, Grid, Header, List, Segment, Menu, Comment, Form, Divider, Item, Image } from 'semantic-ui-react'
 
 import { CustomMessage, Navbar, Search, Conversation, AryaApp } from 'components'
 import 'styling/semantic.less'
@@ -52,35 +52,51 @@ class App extends React.Component{
   }
 
   ShortAnswers(query) {
-    var params = { appid: "G3YUE2-2KH8U3U3E6", i: query};
-    $.getJSON('http://api.wolframalpha.com/v1/result?callback=?',params)
-      .then(({ results }) => this.setState({ answer: results }));
+
+    var params = {"query": query};
+    $.get('https://1byrumjdl9.execute-api.us-west-1.amazonaws.com/default/aryaController?query='+query)
+      .then((response) => this.setState({
+        answer: response.answer
+      }));
   }
 
   Apphandler(userLatestMessage){
       this.setState({
-        userQuery: userLatestMessage
+        userQuery: userLatestMessage.text
       })
-      this.ShortAnswers(userLatestMessage);
-      console.log(userLatestMessage);
+      this.ShortAnswers(userLatestMessage.text);
+
   }
+
 
   render() {
     const { userQuery } = this.state
-
+    var { query } = ""
+    if(this.state.userQuery) query = "query: "+this.state.userQuery;
+    
     const dataItems = [
+
       {
-        type: 'p',
+        type: 'Card',
         props: {
-        },
-        content: this.state.userQuery.text
-      },
-      {
-        type: Header,
-        props: {
-          as: 'h1'
-        },
-        content: this.state.answer
+          subItems: [
+            {
+              type: 'p',
+              props: {
+                subItems: []
+              },
+              content: query
+            },
+            {
+              type: Header,
+              props: {
+                subItems: [],
+                as: 'h1'
+              },
+              content: this.state.answer
+            }
+          ]
+        }
       }
     ]
 
