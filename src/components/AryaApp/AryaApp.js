@@ -35,7 +35,7 @@ export default class AryaApp extends Component {
           <Header as='h1'>
             {this.props.title}<Divider/>
           </Header>
-          {this._createNodes(data)}
+          {this._createNodes(data)} 
         </Segment>
     )
   }
