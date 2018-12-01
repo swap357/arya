@@ -11,7 +11,7 @@ node {
     withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
       remote.user = userName
       remote.identityFile = identity
-      stage ('Build') {
+      stage("SSH Steps Rocks!") {
         sshScript remote: remote, script: "build.sh"
       }
       }
