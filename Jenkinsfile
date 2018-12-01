@@ -18,10 +18,7 @@ node {
 
 
     stage ('Deploy') {
-
-        sshagent(credentials : ['ncalif-one']) {
-            sh '${env.SSH} touch jenkins'
-            }
+      sh '${env.SSH} touch jenkins'
     }
 
   }
