@@ -11,13 +11,15 @@ node {
       sh 'printenv'
     }
 
-    stage('Build image'){
-      if(env.BRANCH_NAME == 'master'){
-
-        println('Build image stage');
-        app = docker.build("swap357/arya")
-	}
+    stage ('Deploy') {
+    steps{
+        sshagent(credentials : ['ncalif-one']) {
+            sh 'touch jenkins'
+            }
+        }
     }
+
+
 
   }
 
