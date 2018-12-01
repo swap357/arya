@@ -11,15 +11,15 @@ node {
       sh 'printenv'
     }
 
+
     stage ('Deploy') {
     steps{
+        echo "awdwada"
         sshagent(credentials : ['ncalif-one']) {
             sh 'touch jenkins'
             }
         }
     }
-
-
 
   }
 
