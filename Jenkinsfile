@@ -11,6 +11,10 @@ node {
     withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
       remote.user = userName
       remote.identityFile = identity
+      stage ('Build') {
+        sshScript remote: remote, script: "build.sh"
+      }
+      }
 
       stage('Environment') {
         sh 'git --version'
@@ -25,7 +29,6 @@ node {
         sshScript remote: remote, script: "deploy.sh"
       }
 
-    }
 
   }
 
