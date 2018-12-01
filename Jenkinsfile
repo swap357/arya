@@ -8,6 +8,10 @@ node {
     remote.host = "13.56.76.109"
     remote.allowAnyHosts = true
 
+    withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+      remote.user = userName
+      remote.identityFile = identity
+
     stage('Checkout') {
       checkout scm
     }
@@ -19,26 +23,20 @@ node {
 
 
     stage ('Build') {
-      withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-        remote.user = userName
-        remote.identityFile = identity
-        slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-        sshScript remote: remote, script: "build.sh"
-        slackSend "Build script execution complete!"
-        }
+      slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+      sshScript remote: remote, script: "build.sh"
+      slackSend "Build script execution complete!"
     }
 
       stage ('Deploy') {
-        withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
-          remote.user = userName
-          remote.identityFile = identity
-          slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-          sshScript remote: remote, script: "deploy.sh"
-          slackSend "Deployment script execution complete!"
-          }
+        slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+        sshScript remote: remote, script: "deploy.sh"
+        slackSend "Deployment script execution complete!"
       }
 
     }
+
+  }
 
   catch (err) {
     throw err
