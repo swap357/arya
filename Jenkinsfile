@@ -23,7 +23,7 @@ node {
         remote.user = userName
         remote.identityFile = identity
         slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-        sshScript remote: remote, script: "abc.sh"
+        sshScript remote: remote, script: "build.sh"
         slackSend "Build script execution complete!"
         }
     }
