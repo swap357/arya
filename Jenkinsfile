@@ -1,11 +1,12 @@
-def remote = [:]
-remote.name = "node-1"
-remote.host = "13.56.76.109"
-remote.allowAnyHosts = true
+
 
 node {
   try {
 
+    def remote = [:]
+    remote.name = "node-1"
+    remote.host = "13.56.76.109"
+    remote.allowAnyHosts = true
     environment {
         SERVER_IP = '13.56.76.109'
         USERNAME = 'ubuntu'
@@ -27,7 +28,8 @@ node {
         remote.identityFile = identity
         stage("SSH Steps Rocks!") {
             writeFile file: 'abc.sh', text: 'ls'
-            }
+              }
+          }
     }
 
   catch (err) {
