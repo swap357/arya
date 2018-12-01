@@ -19,23 +19,24 @@ node {
 
 
     stage ('Build') {
+      slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
       withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
         remote.user = userName
         remote.identityFile = identity
-        slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         sshCommand remote: remote, command: ". build.sh"
-        slackSend "Build script execution complete!"
         }
+        slackSend "Build script execution complete!"
     }
 
       stage ('Deploy') {
+        slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
           remote.user = userName
           remote.identityFile = identity
-          slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
           sshCommand remote: remote, command: ". deploy.sh"
-          slackSend "Deployment script execution complete!"
           }
+          slackSend "Deployment script execution complete!"
+        
       }
 
     }
