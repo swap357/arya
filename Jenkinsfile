@@ -13,9 +13,10 @@ node {
 
 
     stage ('Deploy') {
-        echo "awdwada"
+
         sshagent(credentials : ['ncalif-one']) {
             sh 'touch jenkins'
+            sh 'docker container ls > container_list'
             }
     }
 
