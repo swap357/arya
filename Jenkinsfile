@@ -4,7 +4,7 @@ node {
   try {
 
     def remote = [:]
-    remote.name = "node-1"
+    remote.name = "ncalif-one"
     remote.host = "13.56.76.109"
     remote.allowAnyHosts = true
     environment {
@@ -22,15 +22,26 @@ node {
     }
 
 
-    stage ('Deploy') {
+    stage ('Build') {
       withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
         remote.user = userName
         remote.identityFile = identity
         stage("SSH Steps Rocks!") {
-            sshScript remote: remote, script: "abc.sh"
+            sshScript remote: remote, script: "build.sh"
                 }
-              }
           }
+      }
+
+      stage ('Deploy') {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+          remote.user = userName
+          remote.identityFile = identity
+          stage("SSH Steps Rocks!") {
+              sshScript remote: remote, script: "deploy.sh"
+                }
+          }
+      }
+
     }
 
   catch (err) {
