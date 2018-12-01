@@ -1,6 +1,12 @@
 node {
   try {
 
+    environment {
+        SERVER_IP = '13.56.76.109'
+        USERNAME = 'ubuntu'
+        SSH = 'ssh ${env.USERNAME}@${env.SERVER_IP}'
+    }
+
     stage('Checkout') {
       checkout scm
     }
@@ -8,14 +14,13 @@ node {
     stage('Environment') {
       sh 'git --version'
       echo "Branch: ${env.BRANCH_NAME}"
-
     }
 
 
     stage ('Deploy') {
 
         sshagent(credentials : ['ncalif-one']) {
-            sh 'ssh ubuntu@13.56.76.109 touch jenkins'
+            sh '${env.SSH} touch jenkins'
             }
     }
 
