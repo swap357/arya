@@ -28,6 +28,7 @@ node {
         remote.identityFile = identity
         stage("SSH Steps Rocks!") {
             writeFile file: 'abc.sh', text: 'ls'
+                }
               }
           }
     }
