@@ -15,7 +15,7 @@ node {
     stage ('Deploy') {
 
         sshagent(credentials : ['ncalif-one']) {
-            ssh ubuntu@13.56.76.109 'touch jenkins'
+            sh 'ssh ubuntu@13.56.76.109 touch jenkins'
             }
     }
 
