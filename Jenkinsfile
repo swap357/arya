@@ -8,17 +8,15 @@ node {
     stage('Environment') {
       sh 'git --version'
       echo "Branch: ${env.BRANCH_NAME}"
-      sh 'printenv'
+
     }
 
 
     stage ('Deploy') {
-    steps{
         echo "awdwada"
         sshagent(credentials : ['ncalif-one']) {
             sh 'touch jenkins'
             }
-        }
     }
 
   }
