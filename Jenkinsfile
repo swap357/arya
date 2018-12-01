@@ -23,7 +23,7 @@ node {
         remote.user = userName
         remote.identityFile = identity
         slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-        sshCommand remote: remote, command: ". b"
+        sshCommand remote: remote, command: ". build.sh"
         slackSend "Build script execution complete!"
         }
     }
@@ -33,7 +33,7 @@ node {
           remote.user = userName
           remote.identityFile = identity
           slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-          sshScript remote: remote, script: "deploy.sh"
+          sshCommand remote: remote, command: ". deploy.sh"
           slackSend "Deployment script execution complete!"
           }
       }
