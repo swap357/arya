@@ -1,3 +1,8 @@
+def remote = [:]
+remote.name = "node-1"
+remote.host = "13.56.76.109"
+remote.allowAnyHosts = true
+
 node {
   try {
 
@@ -17,10 +22,13 @@ node {
 
 
     stage ('Deploy') {
-      sh 'ssh ${env.USERNAME}@${env.SERVER_IP} touch jenkins'
+      withCredentials([sshUserPrivateKey(credentialsId: 'ncalif-one', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'userName')]) {
+        remote.user = userName
+        remote.identityFile = identity
+        stage("SSH Steps Rocks!") {
+            writeFile file: 'abc.sh', text: 'ls'
+            }
     }
-
-  }
 
   catch (err) {
     throw err
