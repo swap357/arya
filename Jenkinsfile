@@ -1,12 +1,12 @@
 
 
 node {
-  try {
+  def remote = [:]
+  remote.name = "ncalif-one"
+  remote.host = "13.56.76.109"
+  remote.allowAnyHosts = true
 
-    def remote = [:]
-    remote.name = "ncalif-one"
-    remote.host = "13.56.76.109"
-    remote.allowAnyHosts = true
+  try {
 
     stage('Checkout') {
       checkout scm
@@ -23,7 +23,7 @@ node {
         remote.user = userName
         remote.identityFile = identity
         slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-        sshScript remote: remote, script: "build.sh"
+        sshScript remote: remote, script: "abc.sh"
         slackSend "Build script execution complete!"
         }
     }
