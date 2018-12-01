@@ -12,26 +12,17 @@ node {
       remote.user = userName
       remote.identityFile = identity
 
-    stage('Checkout') {
-      checkout scm
-    }
+      stage('Environment') {
+        sh 'git --version'
+        echo "Branch: ${env.BRANCH_NAME}"
+      }
 
-    stage('Environment') {
-      sh 'git --version'
-      echo "Branch: ${env.BRANCH_NAME}"
-    }
-
-
-    stage ('Build') {
-      slackSend "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
-      sshScript remote: remote, script: "build.sh"
-      slackSend "Build script execution complete!"
-    }
+      stage ('Build') {
+        sshScript remote: remote, script: "build.sh"
+      }
 
       stage ('Deploy') {
-        slackSend "Deploying to cluster - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
         sshScript remote: remote, script: "deploy.sh"
-        slackSend "Deployment script execution complete!"
       }
 
     }
