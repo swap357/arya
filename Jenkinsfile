@@ -31,7 +31,7 @@ node {
         }
           sshCommand remote: remote, command: "sh deploy.sh"
         }
-        slackSend "Build script execution complete!"
+        slackSend "Build and deployment complete - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
 
 
