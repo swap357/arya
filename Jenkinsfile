@@ -26,17 +26,11 @@ node {
         stage('build-script'){
           sshCommand remote: remote, command: "sh build.sh"
         }
-        stage('deploy'){
-
-        }
-          sshCommand remote: remote, command: "sh deploy.sh"
         }
         slackSend "Build and deployment complete - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
     }
-
-
-
-    }
+    
+  }
 
   catch (err) {
     throw err
