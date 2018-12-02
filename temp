@@ -5,3 +5,4 @@ stage('Build image'){
     app = docker.build("swap357/arya")
 }
 }
+something
