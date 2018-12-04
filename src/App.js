@@ -10,7 +10,7 @@ const leftItems = [
 const rightItems = [
   {
     as: 'a',
-    content: '@swap357',
+    content: '@someguy',
     href: 'https://github.com/swap357',
     icon: 'github',
     key: 'github',
