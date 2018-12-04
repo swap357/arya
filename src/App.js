@@ -10,7 +10,7 @@ const leftItems = [
 const rightItems = [
   {
     as: 'a',
-    content: '@swap357',
+    content: '@somerandomguy',
     href: 'https://github.com/swap357',
     icon: 'github',
     key: 'github',
@@ -19,21 +19,6 @@ const rightItems = [
 
 ]
 
-const dataItems = [
-  {
-    type: 'p',
-    props: {
-    },
-    content: "Ada"
-  },
-  {
-    type: Header,
-    props: {
-      as: 'h1'
-    },
-    content: '94° F'
-  }
-]
 const appTitle = "ShortAnswers";
 const nextLine = React.createElement('br');
 
