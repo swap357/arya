@@ -3,12 +3,16 @@ import faker from 'faker'
 import React, { Component } from 'react'
 import { Search, Grid, Header, Segment, Input, Form } from 'semantic-ui-react'
 
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
-  description: faker.company.catchPhrase(),
-  image: faker.internet.avatar(),
-  price: faker.finance.amount(0, 100, 2, '$'),
-}))
+const source = [{
+  title: "@Shorten",
+  description: "Shorten url",
+  image: faker.internet.avatar()
+},
+{
+  title: "@Add2",
+  description: "App that adds two numbers",
+  image: faker.internet.avatar()
+}];
 
 export default class SearchExample extends Component {
 

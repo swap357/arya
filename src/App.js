@@ -3,14 +3,15 @@ import { Button, Grid, Header, List, Segment, Menu, Comment, Form, Divider, Item
 
 import { CustomMessage, Navbar, Search, Conversation, AryaApp } from 'components'
 import 'styling/semantic.less'
-var $ = require ('jquery')
-const leftItems = [
 
-]
+const $ = require('jquery');
+const leftItems = [
+];
+
 const rightItems = [
   {
     as: 'a',
-    content: '@someguy',
+    content: '@swap357',
     href: 'https://github.com/swap357',
     icon: 'github',
     key: 'github',
@@ -19,46 +20,42 @@ const rightItems = [
 
 ]
 
-const appTitle = "ShortAnswers";
 const nextLine = React.createElement('br');
-
-
 
 class App extends React.Component{
   constructor(props){
-    super(props)
+    super(props);
 
-    this.Apphandler = this.Apphandler.bind(this)
-    this.ShortAnswers = this.ShortAnswers.bind(this)
+    this.Apphandler = this.Apphandler.bind(this);
+    this.Controller = this.Controller.bind(this);
     this.state = {
       userQuery: "",
       answer: "",
+      interface: "",
+      app: "Arya"
     }
   }
 
-  ShortAnswers(query) {
+  Controller(query) {
+      let controller_url = 'https://1byrumjdl9.execute-api.us-west-1.amazonaws.com/default/aryaControllerv2?query='+query+'&app='+this.state.app;
 
-    var params = {"query": query};
-    $.get('https://1byrumjdl9.execute-api.us-west-1.amazonaws.com/default/aryaController?query='+query)
+      $.get(controller_url)
       .then((response) => this.setState({
-        answer: response.answer
+        answer: response.message,
+        app: response.app,
+        interface: response.interface
       }));
-  }
+      }
 
   Apphandler(userLatestMessage){
       this.setState({
         userQuery: userLatestMessage.text
-      })
-      this.ShortAnswers(userLatestMessage.text);
-
+      });
+      this.Controller(userLatestMessage.text);
   }
 
-
   render() {
-    const { userQuery } = this.state
-    var { query } = ""
-    if(this.state.userQuery) query = "query: "+this.state.userQuery;
-    
+
     const dataItems = [
 
       {
@@ -70,7 +67,7 @@ class App extends React.Component{
               props: {
                 subItems: []
               },
-              content: query
+              content: this.state.userQuery
             },
             {
               type: Header,
@@ -83,7 +80,7 @@ class App extends React.Component{
           ]
         }
       }
-    ]
+    ];
 
     return(
       <>
@@ -93,7 +90,7 @@ class App extends React.Component{
             <Conversation apphandler={this.Apphandler} />
           </Grid.Column>
           <Grid.Column computer={10} mobile={16}>
-            <AryaApp title={appTitle} data={dataItems} apphandler={this.Apphandler}/>
+            <AryaApp title={this.state.app} data={dataItems} apphandler={this.Apphandler}/>
           </Grid.Column>
         </Grid>
       </Navbar>
